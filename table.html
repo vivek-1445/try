@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>form</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js" ></script>
+    <style type="text/css">
+     
+      
+	 	
+
+#popup {
+  margin: 70px auto;
+  padding: 20px;
+  background:linear-gradient(to bottom right, #B05574, #F87E7B);
+  border-radius: 5px;
+  width: 60%;
+  height: auto;
+  position: relative;
+  transition: all 2s ease-in-out;
+  box-shadow:10px 12px 10px rgb(26, 21, 21);
+
+}
+
+#popup h2 {
+  margin-top: 0;
+  color: red;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 25px;
+}
+#popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+#popup .content {
+  max-height: 100px;
+  overflow: auto;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(1, 0, 0, 0.7);
+  transition: opacity 500ms;
+   display: none;
+}
+
+
+
+	</style>
+
+	<script>
+
+		// print a form
+	function myFunction()
+	{
+		$("#btn1").hide();
+		$("#btn2").hide();
+		$("#print").hide();
+  		window.print();
+	}
+
+    function main(){
+
+    	$(".overlay").toggle(); //close popup
+
+        var delivary =  document.getElementById("delivary1").value; 
+            // console.log(x);
+            document.getElementById("Delivary").innerHTML = delivary; 
+        
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            today = dd + '/' + mm + '/' + yyyy;
+            document.getElementById("date").innerHTML = today;
+            document.getElementById("date1").innerHTML = today; 
+
+            var invoice =  document.getElementById("invoice1").value; 
+            // console.log(invoice);
+            document.getElementById("invoice").innerHTML = invoice; 
+
+            var payment =  document.getElementById("payment1").value; 
+            // console.log(payment);
+            document.getElementById("payment").innerHTML = payment;
+
+            var orderno =  document.getElementById("orderno1").value; 
+            // console.log(orderno);
+            document.getElementById("orderno").innerHTML = payment;
+
+            var DespatchDocument   =  document.getElementById("Despatch1").value; 
+            // console.log(DespatchDocument);
+            document.getElementById("Despatch").innerHTML = DespatchDocument;
+
+            var deliverynote  =  document.getElementById("deliverynote1").value; 
+            // console.log(deliverynote);
+            document.getElementById("delivarynote").innerHTML = deliverynote;
+
+            var Suppler  =  document.getElementById("suppler1").value; 
+            // console.log(Suppler);
+            document.getElementById("suppler").innerHTML = Suppler;
+
+            var otherReference  =  document.getElementById("otherReference1").value; 
+            // console.log(otherReference);
+            document.getElementById("otherReference").innerHTML = otherReference;
+
+            var Despatched  =  document.getElementById("despatched1").value; 
+            // console.log(otherReference);
+            document.getElementById("despatched").innerHTML = otherReference;
+
+            var Destination  =  document.getElementById("destination1").value; 
+            // console.log(otherReference);
+            document.getElementById("destination").innerHTML = Destination;
+
+            var Term  =  document.getElementById("term1").value; 
+            // console.log(otherReference);
+            document.getElementById("term").innerHTML = Term;
+	    	}
+
+    		function popup(){
+    		 //popup open
+     			$(".overlay").toggle();
+    		}
+
+			function sum()
+			{
+				var totalvalue = document.getElementById("total").value;
+
+				var GST = totalvalue * 6 / 100;
+				//console.log(GST);
+
+				var showgst1 = document.getElementById("SGST").innerHTML = GST;
+
+				var showgst	= document.getElementById("CGST").innerHTML = GST;
+
+				var printamount = parseFloat(totalvalue) - parseFloat(showgst1) - parseFloat(showgst1);
+
+				document.getElementById("picprise").innerHTML = printamount;
+
+			}
+
+	</script>
+
+	<script>
+	$(document).ready(function(){
+  				$("#print").click(function(){
+   					 $("#btn1").hide();
+ 			  });
+		$(".total").keyup(function(){
+			var id = $(this).attr('id');
+			var val = $(this).val();
+			var GST = val * 6 / 100;
+			var showgst1 = $('#sgst'+id).html(GST);
+
+			var showgst	= $('#cgst'+id).html(GST);
+
+			var printamount = parseFloat(val) - parseFloat(GST) - parseFloat(GST);
+			if(val!='') {
+				$('#baserate' + id).html(printamount.toFixed(2));
+			}
+			grandtotal();
+		});
+		function grandtotal() {
+			var total1 = ($('#1').val()!='')?$('#1').val():0;
+			var total2 = ($('#2').val()!='')?$('#2').val():0;
+			var total3 =($('#3').val()!='')?$('#3').val():0;
+			//var discount = $('#discount').val();
+			var grandtotal = parseFloat(total1)+parseFloat(total2)+parseFloat(total3);
+			$('#grandtotal').html(grandtotal);
+		}
+			});
+
+			$(document).ready(function(){
+  				$("#print").click(function(){
+   					 $("#btn2").hide();
+ 			  });
+			});
+	</script>
+</head>
+<body>
+
+  <button onclick="popup()" id="btn1">enter data</button>
+
+<div class="overlay">
+	<div id="popup">
+	<table>
+		<tr>
+			<td>Enter invoice no:</td>
+			<td><input type="text" id="invoice1"></td>
+		</tr>
+
+		<tr>
+			<td>Enter delivery:</td>
+			<td><input type="text" id="delivary1"></td>
+		</tr>
+
+		<tr>
+			<td>Eneter Mode of payment:</td>
+			<td><input type="text" id="payment1"></td>
+		</tr>
+
+		<tr>
+			<td>Eneter Suppler's ref:</td>
+			<td><input type="text" id="suppler1"></td>
+		</tr>
+
+		<tr>
+			<td>Eneter other Reference:</td>
+			<td><input type="text" id="otherReference1"></td>
+		</tr>
+
+		<tr>
+			<td>Enter Buyer's Order No:</td>
+			<td><input type="text" id="orderno1"><br></td>
+		</tr>
+
+		<tr>
+			<td>Enter Despatch Document No:</td>
+			<td><input type="text" id="Despatch1"><br></td>
+		</tr>
+
+		<tr>
+			<td>Enter Delivery Note Date:</td>
+			<td><input type="text" id="deliverynote1"><br></td>
+		</tr>
+
+		<tr>
+			<td>Enter Despatched:</td>
+			<td><input type="text" id="despatched1"><br></td>
+		</tr>
+
+		<tr>
+			<td>Enter Destination:</td>
+			<td><input type="text" id="destination1"><br></td>
+		</tr>
+
+		<tr>
+			<td>Enter Term of Delivary:</td>
+			<td><input type="text" id="term1"><br></td>
+		</tr>
+
+		 
+		<tr>
+			<td></td>
+			<td><input type="submit" id="submit" onclick="main()"></td>
+		</tr>
+		
+
+	</table>
+</div>
+
+</div>
+<center>
+	<form>
+		<h3><b>invoice</b></h3>
+		<table border="1">
+			
+			<tr>
+			<td rowspan="4" valign="top" style="width: 350px; height: 150px; " ><small><b>SHREE KRISHNA MOBILE SALES AND SERVICE</b></small>
+			<small><br>GROUND FLOOR SY 14/A/1 PLOT NO 9,<BR>SHOP NO 2/B/1,SHYAMAL BUILDING,KOHINOOR ROAD,<BR>VARACHHA,SURAT.<br><br>GSTINNUM:24BUQPK7508G1ZE</td></small>
+			<td valign="top" style=" height:35px;  font-size:12px;">Invoice No:<br><font valign="top" id="invoice" style="font-size:12px;"></font></td>
+			<td valign="top" style=" height:35px;  font-size:12px;">Dated:<br><font valign="top" id="date" style="font-size:12px;"></font></td>
+			</tr>
+
+			<tr>
+				<td valign="top" style="width: 200px; height:35px;  font-size:12px;">Delivary note:<br><font valign="top" id="Delivary" style="font-size:12px;"></font></td>
+				<td valign="top" style="width: 200px; height:35px; font-size:12px;">Mode/Terms Payment:<br><font valign="top" id="payment" style="font-size:12px;"></font></td>
+			</tr>
+
+			<tr>
+				<td valign="top" style="width: 200px; height:35px; font-size:12px;">Suppler's ref:<br><font valign="top" id="suppler" style="font-size:12px;"></font></td>
+				<td valign="top" style="width: 200px; height:35px; font-size:12px;">Other Reference:<br><font valign="top" id="otherReference" style="font-size:12px;"></font></td>
+			</tr>
+
+			<tr>
+				<td valign="top" style="width: 200px; height:35px; font-size:12px;">Buyer's Order No:<br><font valign="top" id="orderno" style="font-size:12px;"></font></td>
+				<td valign="top" style="width: 200px; height:35px; font-size:12px;">Dated:<br><font valign="top" id="date1" style="font-size:12px;"></font></td>
+			</tr>
+			<tr>
+				<td valign="top" rowspan="3" style=" height: 113px; "><textarea style="border: none; font-size: 16px; height:110px; width: 340px; "></textarea></td>
+				<td valign="top" style="width: 200px; height:35px; font-size:12px;">Despatch Document No:<br><font valign="top" id="Despatch" style="font-size:12px;"></font></td>
+				<td valign="top" style="width: 200px; height:35px; font-size:12px;">Delivary Note Date<br><font valign="top" id="delivarynote" style="font-size:12px;"></font></td>
+			</tr>
+
+			<tr>
+				<td valign="top" style="width: 200px; height:35px; font-size:12px;">Despatched Through:<br><font valign="top" id="despatched" style="font-size:12px;"></font></td>
+				<td valign="top" style="width: 200px; height:35px; font-size:12px;">Destination:<br><font valign="top" id="destination" style="font-size:12px;"></font></td>
+			</tr>
+
+			<tr>
+				<td valign="top" colspan="2" style="width: 200px; height:35px; font-size:12px;">Term of Delivery:<br><font valign="top" id="term" style="font-size:12px;"></font></td>
+			</tr>
+		</table>
+
+		<table border="1" >
+
+	 
+			<tr>
+				<td style="width: 50px;">si</td>
+				<td style="width: 370px; text-align:center;"><small>Items</small></td>
+				<td style="width: 80px; text-align:center;"><small>Base Rate</small></td>
+				<td style="width: 70px; text-align:center;"><small>SGST(6%)</small></td>
+				<td style="width: 80px; text-align:center;"><small>CGST(6%)</small></td>
+				<td style="width: 80px; text-align:center;"><small>Total</small></td>
+			</tr>
+
+
+
+			<tr>
+				<td valign="top" style="width: 22px; text-align:right;">1</td>
+				<td valign="top" style="width: 358px; height: 50px; " ><textarea style="border: none; width:350px; font-size: 18px;"></textarea></td>
+				<td valign="top" style="width: 72px; text-align:right;" id="baserate1"></td>
+				<td valign="top" style="width: 55px; text-align:right;" id="sgst1"></td>
+				<td valign="top" style="width: 65px; text-align:right;" id="cgst1"></td>
+				<td valign="top" style="width: 74px; text-align:right;"><input type="text" class="total" id="1" style="text-align: right; border: none; background: transparent; width:58px; height:20px;"></td>
+			</tr>
+
+			<tr>
+				<td valign="top" style="width: 22px; text-align:right;">2</td>
+				<td valign="top" style="width: 358px; height: 50px; " ><textarea style="border: none; width:350px; font-size: 18px;"></textarea></td>
+				<td valign="top" style="width: 72px; text-align:right;" id="baserate2"></td>
+				<td valign="top" style="width: 55px; text-align:right;" id="sgst2"></td>
+				<td valign="top" style="width: 65px; text-align:right;" id="cgst2"></td>
+				<td valign="top" style="width: 74px; text-align:right;" ><input type="text" class="total" id="2" style="text-align: right; border: none; background: transparent; width:58px; height:20px;"></td>
+			</tr>
+			<tr>
+				<td valign="top" style="width: 22px; text-align:right;">3</td>
+				<td valign="top" style="width: 358px; height: 50px; " ><textarea style="border: none; width:350px; font-size: 18px;"></textarea></td>
+				<td valign="top" style="width: 72px; text-align:right;" id="baserate3"></td>
+				<td valign="top" style="width: 55px; text-align:right;" id="sgst3"></td>
+				<td valign="top" style="width: 65px; text-align:right;" id="cgst3"></td>
+				<td valign="top" style="width: 74px; text-align:right;"><input type="text" class="total" id="3" style="text-align: right; border: none; background: transparent; width:58px; height:20px;"></td>
+			</tr>
+
+
+			<tr>
+				<td colspan="7" id="sumofamount" style="text-align: right;">Grand Total : <span id="grandtotal"></span></td>
+			</tr>
+			<tr>
+				<td colspan="7">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="7">&nbsp;</td>
+			</tr>
+
+			<tr>
+				<td colspan="2">Description</td>
+				<td colspan="5" style="text-align: right;"><small><b>SHREE KRISHNA MOBILE SALES AND SERVICE</b></small></td>
+			</tr>
+			<tr>
+				<td colspan="7" style="height: 35px;">Terms & Condition</td>
+			</tr>
+		</table>
+	</form>
+	<button onclick="myFunction()" id="print">Print this page</button>
+</center>
+
+</body>
+</html>
